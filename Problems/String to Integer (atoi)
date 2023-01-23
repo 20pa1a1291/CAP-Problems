@@ -1,0 +1,45 @@
+Example 1:
+
+Input: s = "42"
+Output: 42
+Explanation: The underlined characters are what is read in, the caret is the current reader position.
+Step 1: "42" (no characters read because there is no leading whitespace)
+         ^
+Step 2: "42" (no characters read because there is neither a '-' nor '+')
+         ^
+Step 3: "42" ("42" is read in)
+           ^
+The parsed integer is 42.
+Since 42 is in the range [-231, 231 - 1], the final result is 42.
+
+
+class Solution {
+        public int myAtoi(String str) {
+    str = str.trim();
+    if (str.isEmpty()) 
+    	return 0;
+    int sign = 1; int i = 0;
+    if (str.charAt(0) == '-' || str.charAt(0) == '+'){
+    	sign = (str.charAt(0) == '-')? -1 : 1;
+    	if (str.length() < 2 || !Character.isDigit(str.charAt(1))) {
+    		return 0;
+    	}
+    	i++;
+     }
+    int n = 0;
+    while (i < str.length()) {
+    	if (Character.isDigit(str.charAt(i))) {
+    		int d = str.charAt(i) - '0';
+    		if (n > (Integer.MAX_VALUE - d) / 10) { //Detect the integer overflow.
+    			n = (sign == -1)? Integer.MIN_VALUE : Integer.MAX_VALUE;
+    			return n;
+    		}
+    		n = n*10 + d;
+    	} else {
+    		break;
+    	}
+    	i++;
+    }
+    return sign * n;
+}
+    }
