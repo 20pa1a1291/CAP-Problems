@@ -1,0 +1,38 @@
+Given a binary tree, find its preorder traversal.
+
+Example 1:
+
+Input:
+        1      
+      /          
+    4    
+  /    \   
+4       2
+Output: 1 4 4 2 
+
+// class Node{
+//     int data;
+//     Node left,right;
+//     Node(int d){
+//         data=d;
+//         left=right=null;
+//     }
+// }
+
+class BinaryTree
+{
+    //Function to return a list containing the preorder traversal of the tree.
+    static ArrayList<Integer> preorder(Node root)
+    {
+      ArrayList<Integer> ans=new ArrayList<>();
+      preOrder(root,ans);
+      return ans;
+    }
+    static void preOrder(Node root,ArrayList<Integer> ans){
+        if(root == null) return;
+        ans.add(root.data);
+        preOrder(root.left,ans);
+        preOrder(root.right,ans);
+    }
+
+}
