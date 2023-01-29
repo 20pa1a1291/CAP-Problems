@@ -1,0 +1,19 @@
+class Tree {
+   int min=minValue(node);
+   int max=maxValue(node);
+   if(root==null)
+      return -1;
+    int minValue(Node node) {
+        if(node.left==null)
+            {
+            return node.data;
+            }
+           return minValue(node.left);
+    }
+    int maxValue(Node node){
+    if(node.right==null)
+      return node.data;
+     return maxValue(node.right);
+     }
+    
+}
