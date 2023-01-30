@@ -1,3 +1,5 @@
+CODE 1 :
+
 class Solution {
     TreeNode prev = null;
     public boolean isValidBST(TreeNode root) {
@@ -13,3 +15,18 @@ class Solution {
         return false;
     }
 }
+
+
+CODE 2:
+
+class Solution{
+    boolean isBST(TreeNode root){
+        retrun isBST(root,Integer.MIN_VALUE,Integer>MAX_VAL);
+        }
+    boolean isBST(TreeNode root,Integer minval,Integer maxval){
+        if(root==null) return true;
+        if(root.val>=maxval ||root.val<=minval) return false;
+        return isBST(root.left,minval,root.val) && isBST(root.right,root.val,maxval);
+        }
+        }
+    
