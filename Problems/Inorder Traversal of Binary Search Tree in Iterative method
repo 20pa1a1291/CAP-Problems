@@ -1,0 +1,39 @@
+CODE :
+
+//User function Template for Java
+
+/* A Binary Tree node 
+
+class Node {
+    int data;
+    Node left, right;
+   Node(int item)    {
+        data = item;
+        left = right = null;
+    }
+} */
+class Solution
+{
+    // Return a list containing the inorder traversal of the given tree
+    ArrayList<Integer> inOrder(Node root)
+    {
+        ArrayList<Integer> ans=new ArrayList<>();
+        if(root==null)
+        return ans;
+        Node curr=root;
+        Stack<Node> stack=new Stack<>();
+        
+        while(curr!=null||!stack.isEmpty()){
+            while(curr!=null){
+               stack.push(curr);
+               curr=curr.left;
+            }
+            curr=stack.pop();
+            ans.add(curr.data);
+            curr=curr.right;
+        }
+        return ans;
+    }
+    
+    
+}
