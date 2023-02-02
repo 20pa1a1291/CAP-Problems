@@ -21,12 +21,12 @@ CODE 2:
 
 class Solution{
     boolean isBST(TreeNode root){
-        retrun isBST(root,Integer.MIN_VALUE,Integer>MAX_VAL);
+        retrun isBST(root,Long.MIN_VALUE,Long.MAX_VAL);                   //can use integer also but some testcases will be in Long values so using "long" is preferred.
         }
-    boolean isBST(TreeNode root,Integer minval,Integer maxval){
+    boolean isBST(TreeNode root,Long minval,Long maxval){
         if(root==null) return true;
         if(root.val>=maxval ||root.val<=minval) return false;
-        return isBST(root.left,minval,root.val) && isBST(root.right,root.val,maxval);
+        return isBST(root.left,minval,Long.valueOf(root.val)) && isBST(root.right,Long.valueOf(root.val),maxval);
         }
         }
     
