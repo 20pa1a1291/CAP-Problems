@@ -1,0 +1,48 @@
+Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it.
+
+If the tree has more than one mode, return them in any order.
+
+Assume a BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than or equal to the node's key.
+The right subtree of a node contains only nodes with keys greater than or equal to the node's key.
+Both the left and right subtrees must also be binary search trees.
+ 
+
+Example 1:
+
+Input: root = [1,null,2,2]
+Output: [2]
+
+
+
+CODE :
+
+class Solution{
+  int max=1;
+  public int[] findMode(TreeNode root){
+    Map<Integer,Integer> map=new HashMap<>();
+    findRoot(root,map);
+    
+    int[] result=new int[map.size()];
+    int index=0;
+    for(Integer i: map.keySet()){
+        if(map.get(i)==max)
+          result[index++]=i;
+         }
+     return Arrays.copyOf(result,index);
+		 }
+     
+     private void findRoot(TreeNode node,Map<Integer,Integer> map){
+				if(node==null) return;
+				else if(map.containsKey(node.val)){
+						int count=map.get(node.val)+1;
+						map.put(node.val,count);
+						max=Math.max(count,max);
+						}
+				else
+						map.put(node.val,1);
+				findRoot(node.left,map);
+				findRoot(node.right,map);
+				}
+				}
