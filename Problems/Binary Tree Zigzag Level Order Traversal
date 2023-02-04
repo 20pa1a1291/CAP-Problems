@@ -6,6 +6,8 @@ Example 1:
 
 Input: root = [3,9,20,null,null,15,7]
 Output: [[3],[20,9],[15,7]]
+
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -21,9 +23,10 @@ Output: [[3],[20,9],[15,7]]
  *     }
  * }
  */
+
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> o=new LinkedList<>();
+        List<List<Integer>> o=new ArrayList<>();
         if(root==null)
         { return o;}
         Queue<TreeNode> queue =new LinkedList<>();
@@ -31,7 +34,7 @@ class Solution {
         boolean odd=true;
         while(!queue.isEmpty()){
             int size=queue.size();
-            LinkedList<Integer> res=new LinkedList<>();
+            List<Integer> res=new ArrayList<>();
             for(int i=1;i<=size;i++){
                TreeNode cur= queue.poll();
                 if(odd)
