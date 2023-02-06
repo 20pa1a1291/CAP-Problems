@@ -1,0 +1,19 @@
+class Solution {
+    // Function to return a list containing the DFS traversal of the graph.
+    static boolean[] visited;
+     void dfs(int s,ArrayList<Integer> res,boolean[] visited,ArrayList<ArrayList<Integer>> adj){
+         visited[s]=true;
+         res.add(s);
+         for(int neigh:adj.get(s)){
+             if(!visited[neigh])
+                dfs(neigh,res,visited,adj);
+         }
+     }
+    public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+        visited=new boolean[V];
+        ArrayList<Integer> res=new ArrayList<>();
+        dfs(0,res,visited,adj);
+        return res;
+        }
+        
+    }
