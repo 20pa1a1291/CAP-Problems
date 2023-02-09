@@ -1,0 +1,45 @@
+Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.
+
+The distance between two adjacent cells is 1.
+Example 1:
+Input: mat = [[0,0,0],[0,1,0],[0,0,0]]
+Output: [[0,0,0],[0,1,0],[0,0,0]]
+
+Example 2:
+Input: mat = [[0,0,0],[0,1,0],[1,1,1]]
+Output: [[0,0,0],[0,1,0],[1,2,1]]
+
+
+CODE :
+
+class Solution {
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<int[]> q=new LinkedList<>();
+        int[][] visited = new int[mat.length][mat[0].length];
+        for(int i=0;i<mat.length;i++){
+            for(int j=0;j<mat[0].length;j++){
+                if(mat[i][j]==0){
+                    q.add(new int[]{i,j});
+                    visited[i][j]=1;}
+            }
+        }
+        int dis=1;
+        while(!q.isEmpty()){
+            int[] ox={-1,0,1,0};
+            int[] oy={0,1,0,-1};
+            int s=q.size();
+            while(s-->0){
+            int[] cur=q.poll();
+            for(int k=0;k<4;k++){
+                int r=cur[0]+ox[k];
+                int c=cur[1]+oy[k];
+                 if(r>= 0 && r < mat.length && c >= 0 && c < mat[0].length && visited[r][c] == 0){
+                        visited[r][c] = 1;
+                        mat[r][c] = dis;
+                        q.add(new int[]{r,c});
+                    }
+            }}dis++;
+        }
+        return mat;
+    }
+}
