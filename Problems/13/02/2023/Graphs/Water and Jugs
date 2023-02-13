@@ -1,0 +1,112 @@
+You are given two jugs with capacities jug1Capacity and jug2Capacity liters. There is an infinite amount of water supply available. Determine whether it is possible to measure exactly targetCapacity liters using these two jugs.
+If targetCapacity liters of water are measurable, you must have targetCapacity liters of water contained within one or both buckets by the end.
+
+Operations allowed:
+Fill any of the jugs with water.
+Empty any of the jugs.
+Pour water from one jug into another till the other jug is completely full, or the first jug itself is empty.
+
+Example 1:
+Input: jug1Capacity = 3, jug2Capacity = 5, targetCapacity = 4
+Output: true
+Explanation: The famous Die Hard example 
+
+Example 2:
+Input: jug1Capacity = 2, jug2Capacity = 6, targetCapacity = 5
+Output: false
+
+Example 3:
+Input: jug1Capacity = 1, jug2Capacity = 2, targetCapacity = 3
+Output: true
+
+
+
+CODE :
+
+Brute Force(BFS)--->
+      	class State{
+        int x,y;
+        State(int a, int b){
+            this.x=a;
+            this.y=b;
+        }
+    } 
+    public boolean canMeasureWater(int x, int y, int z) {
+        if(x+y==z) return true;
+        if(x+y<z) return false;
+        if(x%2==0 && y%2==0 && z%2!=0)//cannot measure odd capacity using even capacity jugs 
+            return false;
+        
+        HashSet<String> visited=new HashSet<>();//state visited hset of jugs
+        State start=new State(0,0);
+        Queue<State> q=new LinkedList<>();
+        q.add(start);
+        //run a bfs. don't add already visited states
+        while(q.size()>0){
+            int n=q.size();
+            State curr=q.poll();
+            if(curr.x+curr.y==z)
+                return true;
+            visited.add(curr.x+","+curr.y);
+            
+            int newY,newX;
+            //pour x->y ********************* option 1
+            newX=curr.x-Math.min(curr.x,y-curr.y);
+            newY=curr.y+Math.min(curr.x,y-curr.y);
+            if(!visited.contains(newX+","+newY) )
+                q.add(new State(newX,newY));
+            
+            //pour x<-y ********************* option 2
+            newX=curr.x+Math.min(curr.y,x-curr.x);
+            newY=curr.y-Math.min(curr.y,x-curr.x);
+            if(!visited.contains(newX+","+newY) )
+                q.add(new State(newX,newY));
+            
+            //expty x   ********************* option 3
+            newX=0;
+            newY=curr.y;//same
+            if(!visited.contains(newX+","+newY) )
+                q.add(new State(newX,newY));
+            
+            //empty y   ********************* option 4
+            newX=curr.x;//same
+            newY=0;
+            if(!visited.contains(newX+","+newY) )
+                q.add(new State(newX,newY));
+            
+            //fill x    ********************* option 5
+            newX=x;//max capacity
+            newY=curr.y;
+            if(!visited.contains(newX+","+newY) )
+                q.add(new State(newX,newY));
+            
+            //fill y    ********************* option 6
+            newX=curr.x;
+            newY=y;//max capacity
+            if(!visited.contains(newX+","+newY) )
+                q.add(new State(newX,newY));
+        }
+        return false;
+    }
+    
+    
+    
+    
+    Math--->
+    
+    class Solution {
+    public boolean canMeasureWater(int jug1Capacity, int jug2Capacity, int targetCapacity) {
+       if(jug1Capacity+jug2Capacity<targetCapacity) return false;
+       if(jug1Capacity==targetCapacity||jug2Capacity==targetCapacity) return true;
+       if(jug1Capacity+jug2Capacity==targetCapacity) return true;
+       return targetCapacity%gcd(jug1Capacity,jug2Capacity)==0;
+    }
+    int gcd(int a,int  b){
+        while(b != 0) {
+            int tmp=b;
+            b=a%b;
+            a=tmp;
+        }
+        return a;
+    }
+}
