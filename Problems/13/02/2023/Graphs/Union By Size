@@ -1,0 +1,58 @@
+class DisJoint{
+   List<Integer> rank=new ArrayList<>();
+   List<Integer> parent=new ArrayList<>();
+   List<Integer> size=new ArrayList<>();
+   public DisJoint(int n){
+      for(int i=1;i<=n;i++){
+          rank.add(0);
+          parent.add(i);
+          size.add(1);
+          }
+          }
+
+    public int findUPar(int node){
+        if(node==parent.get(node))
+            return node;
+        int Upar=findUPar(parent.get(node));
+        parent.set(node,Upar);
+        return parent.get(node);
+        }
+     
+    public void Union(int u,int v){
+        
+     }
+     pubilc void UnionBySize(int u,int v){
+        int pu=findUPar(u);
+        int pv=findUPar(v);
+        if(pu==pv) return;
+        if(size.get(pu)<size.get(pv){
+            parent.set(pu,pv);
+            size.set(pz,size.get(pu)+size.get(pv));   }
+        else {
+            parent.set(pv,pu);
+            sizze.set(pu,size.get(pu)+size.get(pv));  }
+     }}
+     
+
+    class Main {
+    public static void main (String[] args) {
+        DisjointSet ds = new DisjointSet(7);
+        ds.UnionBySize(1, 2);
+        ds.UnionBySize (2, 3);
+        ds.UnionBySize(4, 5);
+        ds.UnionBySize(6, 7);
+        ds.UnionBySize(5, 6);
+        // if 3 and 7 same or not
+        if(ds.finduPar(3)==ds.findUPar(7))  {
+            System.out.println("Same"):
+        }
+        else
+            System.out.printin("not Same");
+        ds.UnionBySize(3, 7);
+        if(ds.finduPar(3)==ds.findUPar(7))  {
+            System.out.println("Same"):
+        }
+        else
+            System.out.printin("not Same");
+            }
+}
