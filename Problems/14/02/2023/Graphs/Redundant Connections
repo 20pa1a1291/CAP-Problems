@@ -1,0 +1,87 @@
+In this problem, a tree is an undirected graph that is connected and has no cycles.
+You are given a graph that started as a tree with n nodes labeled from 1 to n, with one additional edge added. The added edge has two different vertices chosen from 1 to n, and was not an edge that already existed. The graph is represented as an array edges of length n where edges[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the graph.
+Return an edge that can be removed so that the resulting graph is a tree of n nodes. If there are multiple answers, return the answer that occurs last in the input.
+
+Example 1:
+Input: edges = [[1,2],[1,3],[2,3]]
+Output: [2,3]
+
+Example 2:
+Input: edges = [[1,2],[2,3],[3,4],[1,4],[1,5]]
+Output: [1,4]
+
+
+CODE :
+
+UNION FIND--->
+
+class Solution {
+    public int[] findRedundantConnection(int[][] edges) {
+        int[] parent = new int[edges.length+1];
+        int[] size   = new int[edges.length+1];
+        for(int i=0;i<edges.length+1;i++){
+            parent[i]=i;
+            size[i]=1;
+        }
+        for(int[] it:edges){
+            int a=it[0];
+            int b=it[1];
+            if(!union(a,b,parent,size)) return it;
+        }
+
+        return new int[]{-1,-1};
+    }
+    int find(int a,int[] parent){
+        if(parent[a]==a) return a;
+        parent[a]=find(parent[a],parent);
+        return parent[a];
+    }
+    boolean union(int u,int v,int[] parent,int[] size){
+        int up=find(u,parent);
+        int vp=find(v,parent);
+        if(up==vp) return false;
+        if(size[up]<size[vp]){
+            size[vp]+=size[up];
+            parent[up]=vp;
+        }
+        else{
+            size[up]+=size[vp];
+            parent[vp]=up;  }
+
+        return true;
+    }
+
+}
+
+DFS-->
+
+class Solution {
+    public int[] findRedundantConnection(int[][] edges) {
+        int n=edges.length;
+        List<List<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<n+1;i++)
+            adj.add(new ArrayList<>());
+        for(int[] edg : edges){
+            adj.get(edg[0]).add(edg[1]);
+            adj.get(edg[1]).add(edg[0]);
+            if(dfs(adj,edg[0]))
+            return edg;
+        }  
+        return new int[]{};     
+   }
+   boolean dfs(List<List<Integer>> adj,int src){
+       boolean[] vis = new boolean[adj.size()];
+       Stack<Integer> st=new Stack<>();
+       st.push(src);
+       while(!st.isEmpty()){
+           int node=st.pop();
+       if(vis[node])
+             return true;
+       vis[node]=true;
+        for(int i:adj.get(node)){
+            if(!vis[i])
+               st.push(i);
+        }}
+        return false;
+   }
+        }
